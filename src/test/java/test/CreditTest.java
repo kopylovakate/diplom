@@ -6,10 +6,12 @@ import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import page.HomePage;
-
+import page.CreditPage;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CreditTest {
+    HomePage home;
+    CreditPage creditPage;
     String approvedCardNumber = DataHelper.getCardApproved().getCardNumber();
     String declinedCardNumber = DataHelper.getCardDeclined().getCardNumber();
     String randomCardNumber = DataHelper.getRandomCardNumber();
@@ -18,10 +20,14 @@ public class CreditTest {
     String validOwnerName = DataHelper.getRandomName();
     String validCode = DataHelper.getNumberCVC(3);
 
+
     @BeforeEach
     public void setUp() {
         open("http://localhost:8080");
+        home.homePage();
+        creditPage = home.creditPayment();
     }
+
 
     @BeforeAll
     public static void setUpAll() {
@@ -40,14 +46,16 @@ public class CreditTest {
 
     @Test
     public void shouldApprovedCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //HomePage home = new HomePage();
+       // home.homePage();
         var creditPage = home.creditPayment();
         creditPage.cleanFields();
         creditPage.fillCardPaymentForm(approvedCardNumber, validMonth, validYear, validOwnerName, validCode);
         creditPage.bankApprovedOperation();
         Assertions.assertEquals("APPROVED", SQLHelper.getCreditPayment());
     }
+
+
 
     @Test
     public void shouldDeclinedCreditPayment() {
@@ -83,8 +91,8 @@ public class CreditTest {
 
     @Test
     public void shouldEmptyCardNumberCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //HomePage home = new HomePage();
+       // home.homePage();
         var creditPage = home.cardPayment();
         var emptyCardNumber = DataHelper.getEmptyField();
         creditPage.cleanFields();
@@ -94,8 +102,8 @@ public class CreditTest {
 
     @Test
     public void shouldCreditPaymentWithMonthTermValidityExpired() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //HomePage home = new HomePage();
+       // home.homePage();
         var creditPage = home.creditPayment();
         var currentYear = DataHelper.getRandomYear(0);
         var monthTermValidityExpired = DataHelper.getRandomMonth(-1);
@@ -106,8 +114,8 @@ public class CreditTest {
 
     @Test
     public void shouldCardPaymentWithInvalidMonth() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //HomePage home = new HomePage();
+      //  home.homePage();
         var creditPage = home.creditPayment();
         var invalidMonth = DataHelper.getInvalidMonth();
         creditPage.cleanFields();
@@ -117,8 +125,8 @@ public class CreditTest {
 
     @Test
     public void shouldCardPaymentWithEmptyMonth() {
-        HomePage home = new HomePage();
-        home.homePage();
+       // HomePage home = new HomePage();
+       // home.homePage();
         var creditPage = home.cardPayment();
         var emptyMonth = DataHelper.getEmptyField();
         creditPage.cleanFields();
@@ -128,8 +136,8 @@ public class CreditTest {
 
     @Test
     public void shouldCreditPaymentWithYearTermValidityExpired() {
-        HomePage home = new HomePage();
-        home.homePage();
+      //  HomePage home = new HomePage();
+      //  home.homePage();
         var creditPage = home.creditPayment();
         var yearTermValidityExpired = DataHelper.getRandomYear(-1);
         creditPage.cleanFields();
@@ -139,8 +147,8 @@ public class CreditTest {
 
     @Test
     public void shouldCreditPaymentWithInvalidYear() {
-        HomePage home = new HomePage();
-        home.homePage();
+        // HomePage home = new HomePage();
+        // home.homePage();
         var creditPage = home.creditPayment();
         var invalidYear = DataHelper.getRandomYear(6);
         creditPage.cleanFields();
@@ -150,8 +158,8 @@ public class CreditTest {
 
     @Test
     public void shouldCreditPaymentWithEmptyYear() {
-        HomePage home = new HomePage();
-        home.homePage();
+        // HomePage home = new HomePage();
+        //  home.homePage();
         var creditPage = home.creditPayment();
         var emptyYear = DataHelper.getEmptyField();
         creditPage.cleanFields();
@@ -161,8 +169,8 @@ public class CreditTest {
 
     @Test
     public void shouldRusLangNameCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //   HomePage home = new HomePage();
+        //   home.homePage();
         var creditPage = home.creditPayment();
         var rusLangName = DataHelper.getRandomNameRus();
         creditPage.cleanFields();
@@ -172,8 +180,8 @@ public class CreditTest {
 
     @Test
     public void shouldDigitsNameCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //   HomePage home = new HomePage();
+        //   home.homePage();
         var creditPage = home.creditPayment();
         var digitsName = DataHelper.getNumberName();
         creditPage.cleanFields();
@@ -183,8 +191,8 @@ public class CreditTest {
 
     @Test
     public void shouldSpecSymbolsNameCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //  HomePage home = new HomePage();
+        //  home.homePage();
         var creditPage = home.creditPayment();
         var specSymbolsName = DataHelper.getSpecSymbolName();
         creditPage.cleanFields();
@@ -194,8 +202,8 @@ public class CreditTest {
 
     @Test
     public void shouldEmptyNameCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //  HomePage home = new HomePage();
+        //  home.homePage();
         var creditPage = home.creditPayment();
         var emptyName = DataHelper.getEmptyField();
         creditPage.cleanFields();
@@ -205,8 +213,8 @@ public class CreditTest {
 
     @Test
     public void shouldTwoDigitsCodeCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //   HomePage home = new HomePage();
+        //   home.homePage();
         var creditPage = home.creditPayment();
         var twoDigitsCode = DataHelper.getNumberCVC(2);
         creditPage.cleanFields();
@@ -216,8 +224,8 @@ public class CreditTest {
 
     @Test
     public void shouldLettersCodeCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //     HomePage home = new HomePage();
+        //  home.homePage();
         var creditPage = home.creditPayment();
         var lettersCode = DataHelper.getRandomName();
         creditPage.cleanFields();
@@ -227,8 +235,8 @@ public class CreditTest {
 
     @Test
     public void shouldSpecSymbolsCodeCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //  HomePage home = new HomePage();
+        //    home.homePage();
         var creditPage = home.creditPayment();
         var specSymbolsCode = DataHelper.getSpecSymbolName();
         creditPage.cleanFields();
@@ -238,8 +246,8 @@ public class CreditTest {
 
     @Test
     public void shouldEmptyCodeCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //   HomePage home = new HomePage();
+        //   home.homePage();
         var creditPage = home.creditPayment();
         var emptyCode = DataHelper.getEmptyField();
         creditPage.cleanFields();
@@ -249,8 +257,8 @@ public class CreditTest {
 
     @Test
     public void shouldEmptyAllFieldsCreditPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
+        //   HomePage home = new HomePage();
+        //  home.homePage();
         var creditPage = home.creditPayment();
         var emptyCardNumber = DataHelper.getEmptyField();
         var emptyMonth = DataHelper.getEmptyField();
