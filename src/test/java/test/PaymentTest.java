@@ -6,10 +6,12 @@ import data.SQLHelper;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import page.HomePage;
-
+import page.CreditPage;
 import static com.codeborne.selenide.Selenide.open;
 
 public class PaymentTest {
+    HomePage home;
+    CreditPage creditPage;
     String approvedCardNumber = DataHelper.getCardApproved().getCardNumber();
     String declinedCardNumber = DataHelper.getCardDeclined().getCardNumber();
     String randomCardNumber = DataHelper.getRandomCardNumber();
@@ -40,8 +42,6 @@ public class PaymentTest {
 
     @Test
     public void shouldApprovedCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         cardPage.cleanFields();
         cardPage.fillCardPaymentForm(approvedCardNumber, validMonth, validYear, validOwnerName, validCode);
@@ -51,8 +51,6 @@ public class PaymentTest {
 
     @Test
     public void shouldDeclinedCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         cardPage.cleanFields();
         cardPage.fillCardPaymentForm(declinedCardNumber, validMonth, validYear, validOwnerName, validCode);
@@ -62,8 +60,6 @@ public class PaymentTest {
 
     @Test
     public void shouldRandomCardNumberCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         cardPage.cleanFields();
         cardPage.fillCardPaymentForm(randomCardNumber, validMonth, validYear, validOwnerName, validCode);
@@ -72,8 +68,6 @@ public class PaymentTest {
 
     @Test
     public void shouldInvalidCardNumberCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var invalidCardNumber = DataHelper.getRandomShorterCardNumber();
         cardPage.cleanFields();
@@ -83,8 +77,6 @@ public class PaymentTest {
 
     @Test
     public void shouldEmptyCardNumberCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyCardNumber = DataHelper.getEmptyField();
         cardPage.cleanFields();
@@ -94,8 +86,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithMonthTermValidityExpired() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var currentYear = DataHelper.getRandomYear(0);
         var monthTermValidityExpired = DataHelper.getRandomMonth(-1);
@@ -106,8 +96,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithInvalidMonth() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var invalidMonth = DataHelper.getInvalidMonth();
         cardPage.cleanFields();
@@ -117,8 +105,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithEmptyMonth() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyMonth = DataHelper.getEmptyField();
         cardPage.cleanFields();
@@ -128,8 +114,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithYearTermValidityExpired() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var yearTermValidityExpired = DataHelper.getRandomYear(-1);
         cardPage.cleanFields();
@@ -139,8 +123,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithInvalidYear() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var invalidYear = DataHelper.getRandomYear(6);
         cardPage.cleanFields();
@@ -150,8 +132,6 @@ public class PaymentTest {
 
     @Test
     public void shouldCardPaymentWithEmptyYear() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyYear = DataHelper.getEmptyField();
         cardPage.cleanFields();
@@ -161,8 +141,6 @@ public class PaymentTest {
 
     @Test
     public void shouldRusLangNameCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var rusLangName = DataHelper.getRandomNameRus();
         cardPage.cleanFields();
@@ -172,8 +150,6 @@ public class PaymentTest {
 
     @Test
     public void shouldDigitsNameCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var digitsName = DataHelper.getNumberName();
         cardPage.cleanFields();
@@ -183,8 +159,6 @@ public class PaymentTest {
 
     @Test
     public void shouldSpecSymbolsNameCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var specSymbolsName = DataHelper.getSpecSymbolName();
         cardPage.cleanFields();
@@ -194,8 +168,6 @@ public class PaymentTest {
 
     @Test
     public void shouldEmptyNameCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyName = DataHelper.getEmptyField();
         cardPage.cleanFields();
@@ -205,8 +177,6 @@ public class PaymentTest {
 
     @Test
     public void shouldTwoDigitsCodeCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var twoDigitsCode = DataHelper.getNumberCVC(2);
         cardPage.cleanFields();
@@ -216,8 +186,6 @@ public class PaymentTest {
 
     @Test
     public void shouldLettersCodeCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var lettersCode = DataHelper.getRandomName();
         cardPage.cleanFields();
@@ -227,8 +195,6 @@ public class PaymentTest {
 
     @Test
     public void shouldSpecSymbolsCodeCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var specSymbolsCode = DataHelper.getSpecSymbolName();
         cardPage.cleanFields();
@@ -238,8 +204,6 @@ public class PaymentTest {
 
     @Test
     public void shouldEmptyCodeCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyCode = DataHelper.getEmptyField();
         cardPage.cleanFields();
@@ -249,8 +213,6 @@ public class PaymentTest {
 
     @Test
     public void shouldEmptyAllFieldsCardPayment() {
-        HomePage home = new HomePage();
-        home.homePage();
         var cardPage = home.cardPayment();
         var emptyCardNumber = DataHelper.getEmptyField();
         var emptyMonth = DataHelper.getEmptyField();
